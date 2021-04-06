@@ -1,0 +1,10 @@
+﻿{
+  "name": "NoYellowBossItems",
+  "version_number": "1.0.0",
+  "website_url": "https://github.com/xoxfaby/BetterAPI",
+  "description": "Teleporter events don't drop yellow items anymore. Configurable",
+  "dependencies": [
+    "bbepis-BepInExPack-5.3.1",
+    "XoXFaby-MMHOOK_Standalone-1.0.1"
+  ]
+}

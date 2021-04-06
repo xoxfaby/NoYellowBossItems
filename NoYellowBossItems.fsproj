@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Thunderstore\icon.png" />
+    <None Include="Thunderstore\icon.psd" />
+    <None Include="Thunderstore\manifest.json" />
+    <None Include="Thunderstore\README.md" />
+    <None Include="Thunderstore\thunder.zip" />
+    <Compile Include="NoYellowBossItems.fs" />
+  </ItemGroup>
+
+  <ItemGroup />
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\Libs\Assembly-CSharp-Release.publicized.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>..\Libs\BepInEx.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="FSharp.Core">
+      <HintPath>C:\Users\xoxfa\.nuget\packages\fsharp.core\5.0.0\lib\netstandard2.0\FSharp.Core.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="MMHOOK_Assembly-CSharp">
+      <HintPath>..\Libs\MMHOOK_Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>..\Libs\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\Libs\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\Libs\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>..\Libs\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy /y &quot;$(TargetPath)&quot; &quot;G:\SteamLibrary\steamapps\common\Risk of Rain 2\BepInEx\plugins\NoYellowBossItems\&quot;&#xD;&#xA;copy /y &quot;$(TargetPath)&quot; &quot;Thunderstore\$(TargetFileName)&quot;&#xD;&#xA;copy /y &quot;$(ProjectDir)$(OutDir)\FSharp.Core.dll&quot; &quot;G:\SteamLibrary\steamapps\common\Risk of Rain 2\BepInEx\plugins\NoYellowBossItems\&quot;&#xD;&#xA;copy /y &quot;$(ProjectDir)$(OutDir)\FSharp.Core.dll&quot; &quot;Thunderstore\FSharp.Core.dll&quot;&#xD;&#xA;copy /y &quot;$(ProjectDir)Thunderstore\README.md&quot; &quot;$(ProjectDir)README.md&quot;&#xD;&#xA;del Thunderstore\thunder.zip&#xD;&#xA;tar -acf Thunderstore\thunder.zip -C Thunderstore\ $(TargetFileName) README.md icon.png manifest.json FSharp.Core.dll" />
+  </Target>
+
+</Project>
