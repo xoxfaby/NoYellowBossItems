@@ -1,4 +1,4 @@
-# NoYellowBossItems
+﻿# NoYellowBossItems
 
 Does what it says on the box. 
 Teleporter events will no longer drop yellow items. You can disable each in the config. By default they are all disabled.
@@ -18,6 +18,18 @@ If you need help or have suggestions, create an issue on github, join my discord
 https://github.com/xoxfaby/BetterAPI
 
 ## Changelog
+
+#### v1.0.4
+ - Removed debug spam on launch
+
+#### v1.0.3
+ - Fixed the config for real ( I hope )
+
+#### v1.0.2
+ - Fixed config being for Lunar items instead of yellow items 🤦
+
+#### v1.0.1
+ - Thunderstore page update
 
 ## v1.0.0
  - Inital Release

@@ -8,16 +8,16 @@ open System.Security.Permissions
 [<UnverifiableCode>]
 do ()
 
-[<BepInPlugin("com.xoxfaby.NoYellowBossDrops", "NoYellowBossDrops", "1.0.0.0")>]
+[<BepInPlugin("com.xoxfaby.NoYellowBossDrops", "NoYellowBossDrops", "1.0.4.1")>]
 type NoYellowBossItems() = 
     inherit BaseUnityPlugin()
-    
-    let mutable ItemConfig = Seq.empty 
+
+    [<DefaultValue>] val mutable ItemConfig : List<string>
 
     member this.hook_BossGroup_DropRewards = On.RoR2.BossGroup.hook_DropRewards (fun (orig:  On.RoR2.BossGroup.orig_DropRewards) (self : RoR2.BossGroup) ->
         self.bossDrops <- System.Collections.Generic.List<PickupIndex> (seq {
             for pickupIndex in self.bossDrops do
-                if not (Seq.contains (ItemCatalog.GetItemDef pickupIndex.pickupDef.itemIndex).nameToken ItemConfig) then
+                if not (List.contains (ItemCatalog.GetItemDef pickupIndex.pickupDef.itemIndex).nameToken this.ItemConfig) then
                     pickupIndex
         })
         orig.Invoke self)
@@ -25,14 +25,15 @@ type NoYellowBossItems() =
 
     member this.Awake () =
         On.RoR2.BossGroup.add_DropRewards this.hook_BossGroup_DropRewards
-
-    member this.Start () =
-        ItemConfig <- seq {
+        ItemCatalog.availability.CallWhenAvailable (fun () ->
+        this.ItemConfig <- [
             for itemDef in ItemCatalog.itemDefs do 
-                if itemDef.tier = ItemTier.Lunar then 
+                if itemDef.tier = ItemTier.Boss then 
                     let configEntry = this.Config.Bind("Disabled Boss Items", itemDef.nameToken, true, "Set true to stop this item from dropping.")
                     if configEntry.Value then
                         configEntry.Definition.Key
-        }
+        ])
+
+    
 
         
